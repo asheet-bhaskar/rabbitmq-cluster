@@ -8,7 +8,7 @@ services:
       rabbit_cluster_network:
         ipv4_address: 172.20.0.5
     environment:
-      RABBITMQ_ERLANG_COOKIE: "secret string"
+      RABBITMQ_ERLANG_COOKIE: "secret erlang cookie"
       RABBITMQ_NODENAME: rabbit_one
     ports:
       - "4368:4369"
@@ -23,7 +23,7 @@ services:
     depends_on:
       - rabbit_one
     environment:
-      RABBITMQ_ERLANG_COOKIE: "secret string"
+      RABBITMQ_ERLANG_COOKIE: "secret erlang cookie"
       RABBITMQ_NODENAME: rabbit_two
     networks:
       rabbit_cluster_network:
@@ -34,7 +34,7 @@ services:
     depends_on:
       - rabbit_one
     environment:
-      RABBITMQ_ERLANG_COOKIE: "secret string"
+      RABBITMQ_ERLANG_COOKIE: "secret erlang cookie"
       RABBITMQ_NODENAME: rabbit_three
     networks:
       rabbit_cluster_network:
