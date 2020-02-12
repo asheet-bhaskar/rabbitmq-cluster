@@ -1,0 +1,47 @@
+version: '3.2'
+
+services:
+  rabbit_one:
+    image: rabbitmq:3.7
+    hostname: rabbit_one
+    networks:
+      rabbit_cluster_network:
+        ipv4_address: 172.20.0.5
+    environment:
+      RABBITMQ_ERLANG_COOKIE: "secret string"
+      RABBITMQ_NODENAME: rabbit_one
+    ports:
+      - "4368:4369"
+      - "5670:5671"
+      - "5671:5672"
+      - "15670:15671"
+      - "15671:15672"
+      - "25671:25672"
+  rabbit_two:
+    image: rabbitmq:3.7
+    hostname: rabbit_two
+    depends_on:
+      - rabbit_one
+    environment:
+      RABBITMQ_ERLANG_COOKIE: "secret string"
+      RABBITMQ_NODENAME: rabbit_two
+    networks:
+      rabbit_cluster_network:
+        ipv4_address: 172.20.0.6
+  rabbit_three:
+    image: rabbitmq:3.7
+    hostname: rabbit_three
+    depends_on:
+      - rabbit_one
+    environment:
+      RABBITMQ_ERLANG_COOKIE: "secret string"
+      RABBITMQ_NODENAME: rabbit_three
+    networks:
+      rabbit_cluster_network:
+        ipv4_address: 172.20.0.7
+
+networks:
+  rabbit_cluster_network:
+    ipam:
+      config:
+        - subnet: 172.20.0.0/24
